@@ -2,6 +2,9 @@
     <string name="app_name">Cat Clicker</string>
     <string name="cats_display">Cats: %d</string>
     <string name="power_display">Click Power: %d</string>
-    <string name="click_button">KLICK!</string>
+    <string name="click_button">CLICK!</string>
     <string name="upgrades_label">Upgrades:</string>
+    <string name="upgrade_icon_desc">Upgrade icon</string>
+    <string name="buy_button">Buy</string>
+    <string name="upgrade_item_text">%1$s\nCost: %2$d | Level: %3$d</string>
 </resources>

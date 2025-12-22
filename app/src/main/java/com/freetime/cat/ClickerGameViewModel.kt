@@ -26,26 +26,12 @@ class ClickerGameViewModel : ViewModel() {
     val upgrades: LiveData<List<UpgradeUI>> = _upgrades
 
     private val catNames = listOf(
-        "Katzen verdoppeln",
-        "Schnellere Katzen",
-        "Spielende Katzen",
-        "Springende Katzen",
-        "Schnurrende Katzen",
-        "Tanzende Katzen",
-        "Hungrige Katzen",
-        "Neugierige Katzen",
-        "Mutige Katzen",
-        "Faule Katzen",
-        "Verrückte Katzen",
-        "Weise Katzen",
-        "Magische Katzen",
-        "Fliegende Katzen",
-        "Starke Katzen",
-        "Schnelle Katzen",
-        "Glückliche Katzen",
-        "Königliche Katzen",
-        "Mystische Katzen",
-        "Legendäre Katzen"
+        "AutoClicker1",
+        "AutoClicker2",
+        "Next Button",
+        "AutoClicker3",
+        "Upgrade Cats Per Second",
+        "Upgrade Cats Per Click"
     )
 
     init {
@@ -89,4 +75,3 @@ class ClickerGameViewModel : ViewModel() {
         }
     }
 }
-

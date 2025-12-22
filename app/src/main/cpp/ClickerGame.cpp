@@ -6,11 +6,12 @@ ClickerGame::ClickerGame() {
 }
 
 void ClickerGame::initializeUpgrades() {
-    for (int i = 1; i <= 20; i++) {
+    // Use 0-based IDs to match Kotlin/Java indexing
+    for (int i = 0; i < 20; i++) {
         upgrades.push_back(std::make_shared<Upgrade>(
             i,
-            "Katze " + std::to_string(i),
-            10 * i,
+            "Cat " + std::to_string(i + 1),
+            10 * (i + 1),
             1.5
         ));
     }
@@ -20,33 +21,31 @@ void ClickerGame::click() {
     money += clickPower;
 }
 
-void ClickerGame::purchaseUpgrade(int upgradeId) {
-    for (auto& upgrade : upgrades) {
-        if (upgrade->id == upgradeId) {
-            if (money >= upgrade->getCurrentCost()) {
-                money -= upgrade->getCurrentCost();
-                upgrade->level++;
-                applyUpgrade(upgrade);
-            }
-            return;
+void ClickerGame::purchaseUpgrade(int upgradeIndex) {
+    // upgradeIndex is 0-based (as in Kotlin/RecyclerView)
+    if (upgradeIndex >= 0 && upgradeIndex < static_cast<int>(upgrades.size())) {
+        auto& upgrade = upgrades[upgradeIndex];
+        if (money >= upgrade->getCurrentCost()) {
+            money -= upgrade->getCurrentCost();
+            upgrade->level++;
+            applyUpgrade(upgrade);
         }
     }
 }
 
 void ClickerGame::applyUpgrade(const std::shared_ptr<Upgrade>& upgrade) {
-    // Basis-Multiplikator für alle Upgrades
+    // Base multiplier for all upgrades
     double powerIncrease = upgrade->multiplier;
 
-    // Spezielle Boni basierend auf Upgrade-ID
+    // Special bonuses based on upgrade ID
     if (upgrade->id % 3 == 0) {
-        // Jede 3. Katze gibt +10% Bonus
+        // Every 3rd cat gives +10% bonus
         powerIncrease += 0.1;
     }
     if (upgrade->id % 5 == 0) {
-        // Jede 5. Katze gibt +20% Bonus
+        // Every 5th cat gives +20% bonus
         powerIncrease += 0.2;
     }
 
     clickPower = static_cast<int>(clickPower * powerIncrease);
 }
-

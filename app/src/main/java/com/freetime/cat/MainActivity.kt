@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var upgradeAdapter: UpgradeAdapter
     private lateinit var catsDisplay: TextView
     private lateinit var powerDisplay: TextView
-    private lateinit var clickButton: Button
+    private lateinit var clickButton: ImageButton
 
     companion object {
         init {
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         catsDisplay = findViewById(R.id.catsDisplay)
         powerDisplay = findViewById(R.id.powerDisplay)
-        clickButton = findViewById(R.id.clickButton)
+        clickButton = findViewById(R.id.clickImageButton)
 
         val recyclerView = findViewById<RecyclerView>(R.id.upgradesRecycler)
         upgradeAdapter = UpgradeAdapter { upgradeId ->
@@ -52,6 +52,13 @@ class MainActivity : AppCompatActivity() {
         // Observer für Upgrades
         viewModel.upgrades.observe(this) { upgrades ->
             upgradeAdapter.setUpgrades(upgrades)
+            // Wenn Upgrade mit id 2 (3. Upgrade) Level >= 1, ändere Bild
+            val specialUpgrade = upgrades.find { it.id == 2 }
+            if (specialUpgrade != null && specialUpgrade.level >= 1) {
+                clickButton.setImageResource(R.drawable.cat_upgraded)
+            } else {
+                clickButton.setImageResource(R.drawable.cat_default)
+            }
         }
 
         // Click Button Listener
