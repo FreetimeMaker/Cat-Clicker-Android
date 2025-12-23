@@ -12,10 +12,10 @@ struct Upgrade {
     int level;
     double multiplier;
 
-    Upgrade(int id, const std::string& name, int cost, double mult)
-        : id(id), name(name), baseCost(cost), level(0), multiplier(mult) {}
+    Upgrade(int id, std::string name, int cost, double mult)
+        : id(id), name(std::move(name)), baseCost(cost), level(0), multiplier(mult) {}
 
-    int getCurrentCost() const {
+    [[nodiscard]] int getCurrentCost() const {
         return baseCost * (level + 1);
     }
 };
@@ -34,12 +34,12 @@ public:
     void click();
     void purchaseUpgrade(int upgradeId);
 
-    long long getMoney() const { return money; }
-    int getClickPower() const { return clickPower; }
+    [[nodiscard]] long long getMoney() const { return money; }
+    [[nodiscard]] int getClickPower() const { return clickPower; }
 
-    int getUpgradeCount() const { return upgrades.size(); }
+    [[nodiscard]] int getUpgradeCount() const { return static_cast<int>(upgrades.size()); }
     Upgrade* getUpgrade(int index) {
-        if (index >= 0 && index < upgrades.size()) {
+        if (index >= 0 && index < static_cast<int>(upgrades.size())) {
             return upgrades[index].get();
         }
         return nullptr;
@@ -48,4 +48,3 @@ public:
 private:
     void applyUpgrade(const std::shared_ptr<Upgrade>& upgrade);
 };
-
