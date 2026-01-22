@@ -6,15 +6,12 @@ ClickerGame::ClickerGame() {
 }
 
 void ClickerGame::initializeUpgrades() {
-    // Use 0-based IDs to match Kotlin/Java indexing
-    for (int i = 0; i < 20; i++) {
-        upgrades.push_back(std::make_shared<Upgrade>(
-            i,
-            "Cat " + std::to_string(i + 1),
-            10 * (i + 1),
-            1.5
-        ));
-    }
+    upgrades.push_back(std::make_shared<Upgrade>(0, "Catnip", 10, 10, 1.1));
+    upgrades.push_back(std::make_shared<Upgrade>(1, "Yarn Ball", 50, 8, 1.5));
+    upgrades.push_back(std::make_shared<Upgrade>(2, "Scratching Post", 250, 5, 2.0));
+    upgrades.push_back(std::make_shared<Upgrade>(3, "Feather Toy", 1000, 3, 3.0));
+    upgrades.push_back(std::make_shared<Upgrade>(4, "Laser Pointer", 5000, 2, 5.0));
+    upgrades.push_back(std::make_shared<Upgrade>(5, "Cardboard Box", 25000, 1, 10.0));
 }
 
 void ClickerGame::click() {
@@ -22,10 +19,9 @@ void ClickerGame::click() {
 }
 
 void ClickerGame::purchaseUpgrade(int upgradeIndex) {
-    // upgradeIndex is 0-based (as in Kotlin/RecyclerView)
     if (upgradeIndex >= 0 && upgradeIndex < static_cast<int>(upgrades.size())) {
         auto& upgrade = upgrades[upgradeIndex];
-        if (money >= upgrade->getCurrentCost()) {
+        if (upgrade->level < upgrade->maxLevel && money >= upgrade->getCurrentCost()) {
             money -= upgrade->getCurrentCost();
             upgrade->level++;
             applyUpgrade(upgrade);
@@ -34,18 +30,5 @@ void ClickerGame::purchaseUpgrade(int upgradeIndex) {
 }
 
 void ClickerGame::applyUpgrade(const std::shared_ptr<Upgrade>& upgrade) {
-    // Base multiplier for all upgrades
-    double powerIncrease = upgrade->multiplier;
-
-    // Special bonuses based on upgrade ID
-    if (upgrade->id % 3 == 0) {
-        // Every 3rd cat gives +10% bonus
-        powerIncrease += 0.1;
-    }
-    if (upgrade->id % 5 == 0) {
-        // Every 5th cat gives +20% bonus
-        powerIncrease += 0.2;
-    }
-
-    clickPower = static_cast<int>(clickPower * powerIncrease);
+    clickPower = static_cast<int>(clickPower * upgrade->multiplier);
 }

@@ -1,4 +1,4 @@
-package com.freetime.cat
+package com.freetime.catCPP
 
 class ClickerGameJNI {
     external fun initGame()

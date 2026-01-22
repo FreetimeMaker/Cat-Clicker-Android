@@ -1,4 +1,4 @@
-package com.freetime.cat
+package com.freetime.catCPP
 
 import org.junit.Test
 

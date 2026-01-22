@@ -1,4 +1,4 @@
-package com.freetime.cat
+package com.freetime.catCPP
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.LiveData

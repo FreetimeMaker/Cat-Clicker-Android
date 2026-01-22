@@ -1,14 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "com.freetime.cat"
+    namespace = "com.freetime.catCPP"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.freetime.cat"
+        applicationId = "com.freetime.catCPP"
         minSdk = 30
         targetSdk = 36
         versionCode = 1

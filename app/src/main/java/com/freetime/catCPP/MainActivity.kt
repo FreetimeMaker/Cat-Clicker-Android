@@ -1,4 +1,4 @@
-package com.freetime.cat
+package com.freetime.catCPP
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

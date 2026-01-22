@@ -10,10 +10,11 @@ struct Upgrade {
     std::string name;
     int baseCost;
     int level;
+    int maxLevel;
     double multiplier;
 
-    Upgrade(int id, std::string name, int cost, double mult)
-        : id(id), name(std::move(name)), baseCost(cost), level(0), multiplier(mult) {}
+    Upgrade(int id, std::string name, int cost, int maxLvl, double mult)
+        : id(id), name(std::move(name)), baseCost(cost), level(0), maxLevel(maxLvl), multiplier(mult) {}
 
     [[nodiscard]] int getCurrentCost() const {
         return baseCost * (level + 1);

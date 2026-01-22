@@ -1,4 +1,4 @@
-package com.freetime.cat
+package com.freetime.catCPP
 
 import android.view.LayoutInflater
 import android.view.View
