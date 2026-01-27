@@ -4,20 +4,46 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -28,13 +54,16 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.freetime.catCPP.ui.theme.CatCPPTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            CatClickerApp()
+            CatCPPTheme {
+                CatClickerApp()
+            }
         }
     }
 }
@@ -45,245 +74,213 @@ fun CatClickerApp() {
     val viewModel: ClickerGameViewModel = viewModel()
     val gameState by viewModel.gameState.collectAsState()
     val context = LocalContext.current
-    
+
     // Unity-inspired colors
     val unityPrimary = Color(0xFF667eea)
     val unitySecondary = Color(0xFF764ba2)
     val unityAccent = Color(0xFFffd89b)
-    val unityBackground = Color(0xFFff9a9e)
-    
+
     // Export dialog state
     var showExportDialog by remember { mutableStateOf(false) }
-    
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-    ) { 
+    ) {
         Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f)
+        ) {
+            // Click area
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .weight(1f)
+                    .padding(20.dp),
+                contentAlignment = Alignment.Center
             ) {
-                // Click area
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(20.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        // Cat button
-                        Card(
-                            onClick = { viewModel.click() },
-                            modifier = Modifier
-                                .size(200.dp)
-                                .shadow(10.dp, CircleShape),
-                            shape = CircleShape,
-                            colors = CardDefaults.cardColors(
-                                containerColor = Color.Transparent
-                            )
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .background(
-                                        Brush.linearGradient(
-                                            colors = listOf(unityAccent, Color(0xFF19547b))
-                                        ),
-                                        CircleShape
-                                    )
-                                    .fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                AsyncImage(
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data(getCurrentCatImage(gameState.currentCatIndex))
-                                        .build(),
-                                    contentDescription = "Click me!",
-                                    modifier = Modifier
-                                        .size(150.dp)
-                                        .clip(CircleShape),
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-                        }
-                        
-                        Spacer(modifier = Modifier.height(16.dp))
-                        
-                        Text(
-                            text = "Click me!",
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                shadow = androidx.compose.ui.graphics.Shadow(
-                                    color = Color.Black,
-                                    blurRadius = 4f,
-                                )
-                            )
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    // Cat button
+                    Card(
+                        onClick = { viewModel.click() },
+                        modifier = Modifier
+                            .size(200.dp)
+                            .shadow(10.dp, CircleShape),
+                        shape = CircleShape,
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color.Transparent
                         )
-                        
-                        // Cat navigation
-                        Row(
-                            modifier = Modifier.padding(top = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .background(
+                                    Brush.linearGradient(
+                                        colors = listOf(unityAccent, Color(0xFF19547b))
+                                    ),
+                                    CircleShape
+                                )
+                                .fillMaxSize(),
+                            contentAlignment = Alignment.Center
                         ) {
-                            IconButton(onClick = { viewModel.previousCat() }) {
-                                Icon(
-                                    painter = painterResource(R.drawable.pfeill),
-                                    contentDescription = "Previous cat"
-                                )
-                            }
-                            IconButton(onClick = { viewModel.nextCat() }) {
-                                Icon(
-                                    painter = painterResource(R.drawable.pfeilr),
-                                    contentDescription = "Next cat"
-                                )
-                            }
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(getCurrentCatImage(gameState.currentCatIndex))
+                                    .build(),
+                                contentDescription = "Click me!",
+                                modifier = Modifier
+                                    .size(150.dp)
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop
+                            )
                         }
                     }
-                }
-                
-                // Upgrades panel
-                Card(
-                    modifier = Modifier
-                        .width(350.dp)
-                        .fillMaxHeight()
-                        .padding(end = 16.dp, top = 16.dp, bottom = 16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
-                ) {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(20.dp)
-                    ) {
-                        Text(
-                            text = "Upgrades",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = unitySecondary,
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Text(
+                        text = "Click me!",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            shadow = Shadow(
+                                color = Color.Black,
+                                blurRadius = 4f,
+                            )
                         )
-                        
-                        Spacer(modifier = Modifier.height(20.dp))
-                        
-                        LazyColumn(
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
-                        ) {
-                            items(gameState.upgrades) { upgrade ->
-                                UpgradeItem(
-                                    upgrade = upgrade,
-                                    onPurchase = { viewModel.purchaseUpgrade(upgrade.id) },
-                                    canAfford = gameState.money >= upgrade.cost
-                                )
-                            }
+                    )
+
+                    // Cat navigation
+                    Row(
+                        modifier = Modifier.padding(top = 16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
+                    ) {
+                        IconButton(onClick = { viewModel.previousCat() }) {
+                            Icon(
+                                painter = painterResource(R.drawable.pfeill),
+                                contentDescription = "Previous cat"
+                            )
+                        }
+                        IconButton(onClick = { viewModel.nextCat() }) {
+                            Icon(
+                                painter = painterResource(R.drawable.pfeilr),
+                                contentDescription = "Next cat"
+                            )
                         }
                     }
                 }
             }
-            
-            // Footer
+
+            // Upgrades panel
             Card(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                    .width(350.dp)
+                    .fillMaxHeight()
+                    .padding(end = 16.dp, top = 16.dp, bottom = 16.dp),
                 colors = CardDefaults.cardColors(containerColor = Color.White),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
             ) {
-                Row(
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(15.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                        .fillMaxSize()
+                        .padding(20.dp)
                 ) {
-                    IconButton(
-                        onClick = { /* TODO: Implement fullscreen */ },
-                        modifier = Modifier
-                            .size(40.dp)
-                            .background(
-                                Brush.linearGradient(
-                                    colors = listOf(unityPrimary, unitySecondary)
-                                ),
-                                CircleShape
-                            )
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_launcher_foreground),
-                            contentDescription = "Fullscreen",
-                            tint = Color.White
-                        )
-                    }
-                    
                     Text(
-                        text = "Cat Clicker v1.0.8",
-                        fontSize = 14.sp,
-                        color = Color(0xFF666666),
-                        modifier = Modifier.weight(1f),
+                        text = "Upgrades",
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = unitySecondary,
+                        modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center
                     )
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        items(gameState.upgrades) { upgrade ->
+                            UpgradeItem(
+                                upgrade = upgrade,
+                                onPurchase = { viewModel.purchaseUpgrade(upgrade.id) },
+                                canAfford = gameState.money >= upgrade.cost
+                            )
+                        }
+                    }
                 }
             }
         }
-        
-        // Export dialog
-        if (showExportDialog) {
-            AlertDialog(
-                onDismissRequest = { showExportDialog = false },
-                title = { Text("Export Upgrades") },
-                text = { Text("Choose export format for Unity WebGL compatibility") },
-                confirmButton = {
-                    TextButton(
-                        onClick = {
-                            // Export Unity format
-                            UpgradeExporter.exportUnityFormatUpgrades(context, 0L)
-                            showExportDialog = false
-                        }
-                    ) {
-                        Text("Unity Format")
-                    }
-                },
-                dismissButton = {
-                    TextButton(
-                        onClick = {
-                            // Export current state
-                            UpgradeExporter.exportCurrentUpgrades(context, 0L)
-                            showExportDialog = false
-                        }
-                    ) {
-                        Text("Current State")
-                    }
+
+        // Footer
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            colors = CardDefaults.cardColors(containerColor = Color.White),
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = { /* TODO: Implement fullscreen */ },
+                    modifier = Modifier
+                        .size(40.dp)
+                        .background(
+                            Brush.linearGradient(
+                                colors = listOf(unityPrimary, unitySecondary)
+                            ),
+                            CircleShape
+                        )
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_launcher_foreground),
+                        contentDescription = "Fullscreen",
+                        tint = Color.White
+                    )
                 }
-            )
+
+                Text(
+                    text = "Cat Clicker v1.0.8",
+                    fontSize = 14.sp,
+                    color = Color(0xFF666666),
+                    modifier = Modifier.weight(1f),
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
+}
 
 @Composable
 fun UpgradeItem(
-    upgrade: UpgradeUI,
+    upgrade: Upgrade,
     onPurchase: () -> Unit,
     canAfford: Boolean
 ) {
     val unitySecondary = Color(0xFF764ba2)
     val isMaxLevel = upgrade.level >= getMaxLevel(upgrade.id)
-    
+
     Card(
         onClick = { if (canAfford && !isMaxLevel) onPurchase() },
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = if (canAfford && !isMaxLevel) 
-                Color(0xFFf5f7fa) 
-            else 
+            containerColor = if (canAfford && !isMaxLevel)
+                Color(0xFFf5f7fa)
+            else
                 Color(0xFFf5f7fa).copy(alpha = 0.6f)
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = if (canAfford && !isMaxLevel) 6.dp else 2.dp
         ),
         border = if (canAfford && !isMaxLevel)
-            androidx.compose.foundation.BorderStroke(2.dp, Color(0xFF667eea))
+            BorderStroke(2.dp, Color(0xFF667eea))
         else
-            androidx.compose.foundation.BorderStroke(2.dp, Color(0xFFcccccc))
+            BorderStroke(2.dp, Color(0xFFcccccc))
     ) {
         Row(
             modifier = Modifier
@@ -307,9 +304,9 @@ fun UpgradeItem(
                     .padding(8.dp),
                 contentScale = ContentScale.Crop
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = upgrade.name,
@@ -328,7 +325,7 @@ fun UpgradeItem(
                     color = unitySecondary
                 )
             }
-            
+
             Button(
                 onClick = onPurchase,
                 enabled = canAfford && !isMaxLevel,
