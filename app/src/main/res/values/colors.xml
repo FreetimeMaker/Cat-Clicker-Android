@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Unity-inspired color scheme -->
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,4 +8,17 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    
+    <!-- Unity WebGL inspired colors -->
+    <color name="unity_primary">#667eea</color>
+    <color name="unity_secondary">#764ba2</color>
+    <color name="unity_accent">#ffd89b</color>
+    <color name="unity_background">#ff9a9e</color>
+    <color name="unity_surface">#ffffff</color>
+    <color name="unity_surface_variant">#f5f7fa</color>
+    <color name="unity_text_primary">#333333</color>
+    <color name="unity_text_secondary">#666666</color>
+    <color name="unity_gold">#ffd700</color>
+    <color name="upgrade_available">#4CAF50</color>
+    <color name="upgrade_unavailable">#cccccc</color>
 </resources>

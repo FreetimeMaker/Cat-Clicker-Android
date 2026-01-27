@@ -28,7 +28,6 @@ private:
     std::vector<std::shared_ptr<Upgrade>> upgrades;
 
 public:
-    ClickerGame();
     ~ClickerGame() = default;
 
     void initializeUpgrades();

@@ -1,17 +1,13 @@
 #include "ClickerGame.h"
 #include <cmath>
 
-ClickerGame::ClickerGame() {
-    initializeUpgrades();
-}
-
 void ClickerGame::initializeUpgrades() {
-    upgrades.push_back(std::make_shared<Upgrade>(0, "Catnip", 10, 10, 1.1));
-    upgrades.push_back(std::make_shared<Upgrade>(1, "Yarn Ball", 50, 8, 1.5));
-    upgrades.push_back(std::make_shared<Upgrade>(2, "Scratching Post", 250, 5, 2.0));
-    upgrades.push_back(std::make_shared<Upgrade>(3, "Feather Toy", 1000, 3, 3.0));
-    upgrades.push_back(std::make_shared<Upgrade>(4, "Laser Pointer", 5000, 2, 5.0));
-    upgrades.push_back(std::make_shared<Upgrade>(5, "Cardboard Box", 25000, 1, 10.0));
+    upgrades.push_back(std::make_shared<Upgrade>(0, "Catnip", 25, 4, 1));
+    upgrades.push_back(std::make_shared<Upgrade>(1, "Yarn Ball", 100, 4, 1));
+    upgrades.push_back(std::make_shared<Upgrade>(2, "Scratching Post", 400, 19, 2));
+    upgrades.push_back(std::make_shared<Upgrade>(3, "Feather Toy", 400, 4, 1));
+    upgrades.push_back(std::make_shared<Upgrade>(4, "Laser Pointer", 800, 4, 3));
+    upgrades.push_back(std::make_shared<Upgrade>(5, "Cardboard Box", 1600, 4, 3));
 }
 
 void ClickerGame::click() {
