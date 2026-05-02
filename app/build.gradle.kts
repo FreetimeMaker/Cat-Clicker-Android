@@ -54,7 +54,7 @@ dependencies {
     implementation("androidx.recyclerview:recyclerview:1.4.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.10.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.10.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.1")
     implementation("androidx.cardview:cardview:1.0.0")
 
     // Jetpack Compose
