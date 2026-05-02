@@ -58,7 +58,7 @@ dependencies {
     implementation("androidx.cardview:cardview:1.0.0")
 
     // Jetpack Compose
-    val composeBom = platform("androidx.compose:compose-bom:2024.06.00")
+    val composeBom = platform("androidx.compose:compose-bom:2024.12.01")
     implementation(composeBom)
     androidTestImplementation(composeBom)
 
