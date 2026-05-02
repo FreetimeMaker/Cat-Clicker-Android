@@ -149,25 +149,6 @@ fun CatClickerApp() {
                             )
                         )
                     )
-
-                    // Cat navigation
-                    Row(
-                        modifier = Modifier.padding(top = 16.dp),
-                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-                    ) {
-                        IconButton(onClick = { viewModel.previousCat() }) {
-                            Icon(
-                                painter = painterResource(R.drawable.pfeill),
-                                contentDescription = "Previous cat"
-                            )
-                        }
-                        IconButton(onClick = { viewModel.nextCat() }) {
-                            Icon(
-                                painter = painterResource(R.drawable.pfeilr),
-                                contentDescription = "Next cat"
-                            )
-                        }
-                    }
                 }
             }
 
@@ -245,7 +226,7 @@ fun CatClickerApp() {
                 }
 
                 Text(
-                    text = "Cat Clicker v1.0.8",
+                    text = "Cat Clicker v1.0.0",
                     fontSize = 14.sp,
                     color = Color(0xFF666666),
                     modifier = Modifier.weight(1f),
